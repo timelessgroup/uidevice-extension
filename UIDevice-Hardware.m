@@ -58,10 +58,13 @@
  iPhone4,1 ->    (iPhone 4S/GSM), TBD
  iPhone4,2 ->    (iPhone 4S/CDMA), TBD
  iPhone4,3 ->    (iPhone 4S/???)
- iPhone5,1 ->    iPhone Next Gen, TBD
- iPhone5,1 ->    iPhone Next Gen, TBD
- iPhone5,1 ->    iPhone Next Gen, TBD
-
+ iPhone5,1 ->    iPhone 5
+ iPhone5,2 ->    iPhone 5
+ iPhone5,3 ->    iPhone 5C (GSM)
+ iPhone5,4 ->    iPhone 5C (Global)
+ iPhone6,1 ->    iPhone 5S (GSM)
+ iPhone6,2 ->    iPhone 5S (Global)
+ 
  iPod1,1   ->    iPod touch 1, N45
  iPod2,1   ->    iPod touch 2, N72
  iPod2,2   ->    iPod touch 3, Prototype
@@ -209,46 +212,26 @@
     if ([platform isEqualToString:@"iFPGA"])        return UIDeviceIFPGA;
 	
     // iPhone
-    if ([platform isEqualToString:@"iPhone1,1"])    return UIDeviceiPhone1;
-    if ([platform isEqualToString:@"iPhone1,2"])    return UIDeviceiPhone3G;
-    if ([platform hasPrefix:@"iPhone2"])            return UIDeviceiPhone3GS;
-    if ([platform hasPrefix:@"iPhone3"])            return UIDeviceiPhone4;
-    if ([platform hasPrefix:@"iPhone4"])            return UIDeviceiPhone4S;
-    if ([platform hasPrefix:@"iPhone5"])            return UIDeviceiPhone5;
+    if ([platform isEqualToString:@"iPhone1,1"])	return UIDeviceiPhone1;
+    if ([platform isEqualToString:@"iPhone1,2"])	return UIDeviceiPhone3G;
+    if ([platform hasPrefix:@"iPhone2"])			return UIDeviceiPhone3GS;
+    if ([platform hasPrefix:@"iPhone3"])			return UIDeviceiPhone4;
+    if ([platform hasPrefix:@"iPhone4"])			return UIDeviceiPhone4S;
+	if ([platform hasPrefix:@"iPhone5"])			return [UIDevice getSubmodel:platform] <= 2 ? UIDeviceiPhone5 : UIDeviceiPhone5C;
+    if ([platform hasPrefix:@"iPhone6"])			return UIDeviceiPhone5S;
     
     // iPod
-    if ([platform hasPrefix:@"iPod1"])             return UIDeviceiPod1;
-    if ([platform isEqualToString:@"iPod2,2"])      return UIDeviceiPod3;
-    if ([platform hasPrefix:@"iPod2"])              return UIDeviceiPod2;
-    if ([platform hasPrefix:@"iPod3"])              return UIDeviceiPod3;
-    if ([platform hasPrefix:@"iPod4"])              return UIDeviceiPod4;
-    if ([platform hasPrefix:@"iPod5"])              return UIDeviceiPod5;
+    if ([platform hasPrefix:@"iPod1"])				return UIDeviceiPod1;
+    if ([platform isEqualToString:@"iPod2,2"])		return UIDeviceiPod3;
+    if ([platform hasPrefix:@"iPod2"])				return UIDeviceiPod2;
+    if ([platform hasPrefix:@"iPod3"])				return UIDeviceiPod3;
+    if ([platform hasPrefix:@"iPod4"])				return UIDeviceiPod4;
+    if ([platform hasPrefix:@"iPod5"])				return UIDeviceiPod5;
 	
     // iPad
-    if ([platform hasPrefix:@"iPad1"])              return UIDeviceiPad1;
-    if ([platform hasPrefix:@"iPad2"])
-    {
-        NSInteger submodel = [ UIDevice getSubmodel:platform ];
-        if ( submodel <= 4 )
-        {
-            return UIDeviceiPad2;
-        } else
-        {
-            return UIDeviceiPadMini;
-        }
-    }
-    if ([platform hasPrefix:@"iPad3"])
-    {
-        NSInteger submodel = [ UIDevice getSubmodel:platform ];
-        if ( submodel <= 3 )
-        {
-            return UIDeviceTheNewiPad;
-        } else
-        {
-            return UIDeviceiPad4G;
-        }
-    }
-    
+    if ([platform hasPrefix:@"iPad1"])				return UIDeviceiPad1;
+    if ([platform hasPrefix:@"iPad2"])				return [UIDevice getSubmodel:platform] <= 4 ? UIDeviceiPad2 : UIDeviceiPadMini;
+    if ([platform hasPrefix:@"iPad3"])				return [UIDevice getSubmodel:platform] <= 3 ? UIDeviceTheNewiPad : UIDeviceiPad4G;
     if ([platform hasPrefix:@"iPad4"])              return UIDeviceiPad4G;
     
     // Apple TV
@@ -280,6 +263,8 @@
         case UIDeviceiPhone4: return IPHONE_4_NAMESTRING;
         case UIDeviceiPhone4S: return IPHONE_4S_NAMESTRING;
         case UIDeviceiPhone5: return IPHONE_5_NAMESTRING;
+		case UIDeviceiPhone5C: return IPHONE_5C_NAMESTRING;
+		case UIDeviceiPhone5S: return IPHONE_5S_NAMESTRING;
         case UIDeviceUnknowniPhone: return IPHONE_UNKNOWN_NAMESTRING;
 			
         case UIDeviceiPod1: return IPOD_1_NAMESTRING;
